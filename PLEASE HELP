@@ -1,0 +1,75 @@
+from tkinter import *
+from tkinter import ttk
+
+class app:
+    def __init__(self, master):         #defines the master function
+        self.master = master
+        self.menu()
+
+    def menu(self):
+        for i in self.master.winfo_children(): #still have like 0 clue what this does
+            i.destroy() #destroys the old frame
+        self.frame1 = Frame(self.master, width=300, height=700)
+        self.frame1.pack()
+        self.reg_txt = ttk.Label(self.frame1, text='Main', width=150).pack()
+        self.edit_btn = ttk.Button(self.frame1, text="Go to edit", command=self.edit, width=150).pack()
+        self.read_btn = ttk.Button(self.frame1, text="Go to read", command=self.read, width=150).pack()
+
+    def edit(self):
+        for i in self.master.winfo_children():
+            i.destroy()
+        self.frame2 = Frame(self.master, width=300, height=700)
+        self.frame2.pack()
+        self.reg_txt2 = ttk.Label(self.frame2, text='Edit').pack()
+        
+        self.name_lbl = ttk.Label(self.frame2, text='Name').pack()
+        self.name_txt = Text(self.frame2, width=20, height=3)
+        self.name_txt.pack()
+
+        self.dire_lbl = ttk.Label(self.frame2, text='Director').pack()
+        self.dire_txt = Text(self.frame2, width=20, height=3)
+        self.dire_txt.pack()
+
+        self.load_btn = ttk.Button(self.frame2, text="Load", width=20, command = self.load).pack()
+        self.save_btn = ttk.Button(self.frame2, text="Save", width=20, command=self.save).pack()
+        
+        self.main_btn = ttk.Button(self.frame2, text="Go to menu", command=self.menu).pack()
+
+    def save(self):
+        name = self.name_txt.get("1.0", "end-1c")       #i hate this so much (25 minutes)
+        director = self.dire_txt.get("1.0", "end-1c")
+        with open("movies.txt", "a") as f:
+            f.write(name + ":" + director + "\n")
+
+    def load(self):
+        name = self.name_txt.get("1.0", END)
+        
+        with open("movies.txt", "r") as f:
+            lines = f.readlines()
+            joint = {}
+            for line in lines:
+                name, director = line.strip().split(":")
+                joint[name.strip()] = director.strip()
+            
+                if name in joint:
+                    
+                    director = joint[name]
+                    self.dire_txt.delete("1.0", END)
+                    self.dire_txt.insert("1.0", director)
+                else:
+                    self.dire_txt.config(text = "cannot find")
+
+
+    def read(self):
+        for i in self.master.winfo_children():
+            i.destroy()
+        self.frame3 = Frame(self.master, width=300, height=700)
+        self.frame3.pack()
+        self.reg_txt3 = ttk.Label(self.frame3, text='Read').pack()
+        self.main_btn = ttk.Button(self.frame3, text="Go to menu", command=self.menu).pack()
+
+
+root = Tk()
+root.title("Movie")
+app(root)
+root.mainloop()
