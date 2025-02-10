@@ -21,7 +21,7 @@ class app:
         self.frame2 = Frame(self.master, width=300, height=700)
         self.frame2.pack()
         self.reg_txt2 = ttk.Label(self.frame2, text='Edit').pack()
-        
+       
         self.name_lbl = ttk.Label(self.frame2, text='Name').pack()
         self.name_txt = Text(self.frame2, width=20, height=3)
         self.name_txt.pack()
@@ -32,7 +32,7 @@ class app:
 
         self.load_btn = ttk.Button(self.frame2, text="Load", width=20, command = self.load).pack()
         self.save_btn = ttk.Button(self.frame2, text="Save", width=20, command=self.save).pack()
-        
+       
         self.main_btn = ttk.Button(self.frame2, text="Go to menu", command=self.menu).pack()
 
     def save(self):
@@ -40,24 +40,22 @@ class app:
         director = self.dire_txt.get("1.0", "end-1c")
         with open("movies.txt", "a") as f:
             f.write(name + ":" + director + "\n")
+            
 
     def load(self):
-        name = self.name_txt.get("1.0", END)
-        
+        name = self.name_txt.get("1.0", "end-1c")
+        joint = {}
         with open("movies.txt", "r") as f:
             lines = f.readlines()
-            joint = {}
             for line in lines:
-                name, director = line.strip().split(":")
-                joint[name.strip()] = director.strip()
-            
-                if name in joint:
-                    
-                    director = joint[name]
-                    self.dire_txt.delete("1.0", END)
-                    self.dire_txt.insert("1.0", director)
-                else:
-                    self.dire_txt.config(text = "cannot find")
+                movie_name, director = line.strip().split(":")
+                joint[movie_name.strip()] = director.strip()
+        if name in joint:   
+            director = joint[name]
+            self.dire_txt.delete("1.0", END)
+            self.dire_txt.insert("1.0", director)
+        else:
+            self.dire_txt.config(text = "cannot find")
 
 
     def read(self):
@@ -73,3 +71,4 @@ root = Tk()
 root.title("Movie")
 app(root)
 root.mainloop()
+
