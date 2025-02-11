@@ -32,7 +32,7 @@ class app:
 
         self.load_btn = ttk.Button(self.frame2, text="Load", width=20, command = self.load).pack()
         self.save_btn = ttk.Button(self.frame2, text="Save", width=20, command=self.save).pack()
-       
+        self.replace_btn = ttk.Button(self.frame2, text="Replace", width = 20).pack()
         self.main_btn = ttk.Button(self.frame2, text="Go to menu", command=self.menu).pack()
 
     def save(self):
@@ -40,7 +40,21 @@ class app:
         director = self.dire_txt.get("1.0", "end-1c")
         with open("movies.txt", "a") as f:
             f.write(name + ":" + director + "\n")
-            
+        
+    def replace(self):
+        changename = self.name_txt.get("1.0", "end-1c")                        #DO THE REPLACE FUNCTION
+        changedirector = self.dire_txt.get("1.0", "end-1c")
+        old = {}
+        with open("movies.txt", "r") as f:
+            oldlines = f.readlines()
+            for line in oldlines:
+                oldname, oldirector = line.strip().split(":")
+                old[oldname.strip()] = oldirector.strip()
+            if changename in oldlines:
+
+                
+
+
 
     def load(self):
         name = self.name_txt.get("1.0", "end-1c")
