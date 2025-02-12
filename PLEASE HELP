@@ -1,26 +1,13 @@
-
 from tkinter import *
 from tkinter import ttk
 
 global Jack
-Jack = FALSE
+Jack = False #login variable initalised to be false everytime we start the program
 
 class app:
     def __init__(self, master):  # defines the master function
         self.master = master
         self.menu()
-    #F
-    #F
-    #R
-    #R
-    #A
-    #A
-    #M
-    #M
-    #E
-    #E
-    #S
-    #S
 
     def menu(self):
         for widget in self.master.winfo_children():  # destroys previous frames
@@ -76,24 +63,12 @@ class app:
         self.frame4.pack()
         self.login_lbl = ttk.Label(self.frame4, text = "Login").pack()
         self.username_lbl = ttk.Label(self.frame4, text = "Username").pack()
-        self.username_txt = Text(self.frame4, width = 20, height = 3).pack()
+        self.username_txt = Text(self.frame4, width = 20, height = 3)  # Consider using Entry for username
+        self.username_txt.pack()
         self.password_lbl = ttk.Label(self.frame4, text = "Password").pack()
-        self.password_txt = Text(self.frame4, width = 20, height = 3).pack()
+        self.password_txt = Text(self.frame4, width = 20, height = 3)  # Consider using Entry for password
+        self.password_txt.pack()
         self.login_btn = ttk.Button(self.frame4, text = "Login", command = self.atmptlogin).pack()
-    #M
-    #M
-    #E
-    #E
-    #T
-    #T
-    #H
-    #H
-    #O
-    #O
-    #D
-    #D
-    #S
-    #S
 
     def replace(self):
         changename = self.name_txt.get("1.0", "end-1c").strip()
@@ -148,20 +123,19 @@ class app:
             self.dire_txt.insert("1.0", "Cannot find movie")
 
     def atmptlogin(self):
-        global Jack
+        global Jack  # Ensure you're modifying the global variable
         username = self.username_txt.get("1.0", "end-1c")
         password = self.password_txt.get("1.0", "end-1c")
         
         if username == "Admin" and password == "Admin1":
             print("Logged in")
-            Jack = TRUE
-            self.menu()
+            Jack = True  # Set global Jack to True
+            self.menu()  # After successful login, go back to the menu
         else:
             print("Incorrect try again")
-            Jack = FALSE
+            Jack = False  # Set global Jack to False
 
 root = Tk()
 root.title("Movie Management")
 app(root)
 root.mainloop()
-
